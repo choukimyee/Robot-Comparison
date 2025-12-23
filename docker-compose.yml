@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/robot-comparison
+      - SCRAPE_INTERVAL_HOURS=24
+      - ENABLE_AUTO_SCRAPING=true
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+  # Optional: Scheduled scraper service
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run scrape:scheduled
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/robot-comparison
+      - SCRAPE_INTERVAL_HOURS=24
+      - CRON_SCHEDULE=0 2 * * *
+      - RUN_ON_START=true
+    depends_on:
+      - mongo
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
