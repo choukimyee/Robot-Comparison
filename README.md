@@ -42,10 +42,33 @@
 
 ## 📦 安装与运行
 
+### 🎭 快速体验（演示模式 - 无需数据库）
+
+如果您想快速体验项目功能而不安装数据库：
+
+```bash
+# 1. 安装依赖
+npm install
+
+# 2. 启用演示模式（已默认启用）
+# 确认 .env 文件中 DEMO_MODE=true
+
+# 3. 启动应用
+npm run dev
+```
+
+访问 http://localhost:3000 即可体验！
+
+查看详情：[DEMO_MODE.md](./DEMO_MODE.md)
+
+---
+
+### 🔧 完整安装（需要数据库）
+
 ### 前置要求
 
 - Node.js 18+ 
-- MongoDB 4.4+
+- MongoDB 4.4+ 或 MongoDB Atlas（云数据库）
 - npm 或 yarn
 
 ### 1. 克隆项目
@@ -85,9 +108,22 @@ RUN_ON_START=false
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-### 4. 启动 MongoDB
+### 4. 配置数据库
 
-确保 MongoDB 服务已启动：
+#### 选项 A：使用 MongoDB Atlas（推荐 - 免费云数据库）
+
+1. 访问 https://www.mongodb.com/cloud/atlas/register
+2. 创建免费集群（M0）
+3. 获取连接字符串
+4. 更新 `.env`：
+   ```env
+   DEMO_MODE=false
+   MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/robot-comparison
+   ```
+
+详细步骤：[docs/mongodb-atlas-setup.md](./docs/mongodb-atlas-setup.md)
+
+#### 选项 B：本地 MongoDB
 
 ```bash
 # macOS (使用 Homebrew)
@@ -98,6 +134,12 @@ sudo systemctl start mongod
 
 # Docker
 docker run -d -p 27017:27017 --name mongodb mongo:latest
+```
+
+更新 `.env`：
+```env
+DEMO_MODE=false
+MONGODB_URI=mongodb://localhost:27017/robot-comparison
 ```
 
 ### 5. 运行开发服务器

@@ -1,12 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/lib/mongodb'
 import Robot from '@/models/Robot'
+import { mockRobots } from '@/lib/mock-data'
 
 // GET /api/robots/[id] - Get single robot
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  // Demo mode - return mock data
+  if (process.env.DEMO_MODE === 'true') {
+    const robot = mockRobots.find(r => r._id === params.id)
+    
+    if (!robot) {
+      return NextResponse.json(
+        { success: false, error: 'Robot not found' },
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json({
+      success: true,
+      robot
+    })
+  }
+
   try {
     await connectDB()
 

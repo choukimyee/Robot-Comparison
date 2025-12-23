@@ -1,9 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/lib/mongodb'
 import Manufacturer from '@/models/Manufacturer'
+import { mockManufacturers } from '@/lib/mock-data'
 
 // GET /api/manufacturers - List all manufacturers
 export async function GET(request: NextRequest) {
+  // Demo mode - return mock data
+  if (process.env.DEMO_MODE === 'true') {
+    return NextResponse.json({
+      success: true,
+      manufacturers: mockManufacturers,
+      count: mockManufacturers.length
+    })
+  }
+
   try {
     await connectDB()
 

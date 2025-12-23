@@ -2,9 +2,27 @@ import { NextRequest, NextResponse } from 'next/server'
 import connectDB from '@/lib/mongodb'
 import Robot from '@/models/Robot'
 import Manufacturer from '@/models/Manufacturer'
+import { mockRobots } from '@/lib/mock-data'
 
 // GET /api/robots - List robots with filters
 export async function GET(request: NextRequest) {
+  // Demo mode - return mock data
+  if (process.env.DEMO_MODE === 'true') {
+    const searchParams = request.nextUrl.searchParams
+    const category = searchParams.get('category')
+    
+    let filtered = mockRobots
+    if (category) {
+      filtered = mockRobots.filter(r => r.category === category)
+    }
+    
+    return NextResponse.json({
+      success: true,
+      robots: filtered,
+      count: filtered.length
+    })
+  }
+
   try {
     await connectDB()
 
