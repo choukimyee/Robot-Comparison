@@ -79,11 +79,11 @@ export default function ManufacturersPage() {
       website: manufacturer.website,
       country: manufacturer.country,
       description: manufacturer.description || '',
-      socialMedia: manufacturer.socialMedia || {
-        twitter: '',
-        weixin: '',
-        linkedin: '',
-        youtube: ''
+      socialMedia: {
+        twitter: manufacturer.socialMedia?.twitter || '',
+        weixin: manufacturer.socialMedia?.weixin || '',
+        linkedin: manufacturer.socialMedia?.linkedin || '',
+        youtube: manufacturer.socialMedia?.youtube || ''
       }
     })
     setEditingId(manufacturer._id!)

@@ -138,7 +138,7 @@ export async function scrapeWithPuppeteer(url: string): Promise<ScrapedData> {
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 })
 
     // Wait for content to load
-    await page.waitForTimeout(2000)
+    await new Promise(resolve => setTimeout(resolve, 2000))
 
     const data = await page.evaluate(() => {
       const result: ScrapedData = {}

@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { RobotCategory, CATEGORY_LABELS } from '@/types'
-import { Bot, Dog, User, Vacuum, Leaf, Droplets } from 'lucide-react'
+import { Bot, Dog, User, Leaf, Droplets, Disc } from 'lucide-react'
 
 const categoryIcons = {
   [RobotCategory.QUADRUPED]: Dog,
   [RobotCategory.HUMANOID]: User,
-  [RobotCategory.VACUUM]: Vacuum,
+  [RobotCategory.VACUUM]: Disc,
   [RobotCategory.LAWN_MOWER]: Leaf,
   [RobotCategory.POOL_CLEANER]: Droplets,
 }

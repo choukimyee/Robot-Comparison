@@ -9,6 +9,7 @@ import connectDB from '../lib/mongodb'
 import Robot from '../models/Robot'
 import ScrapingJob from '../models/ScrapingJob'
 import { scrapeUrl, scrapeManufacturerSite } from '../lib/scraper'
+import type { DataSource } from '../types'
 
 const SCRAPE_INTERVAL = process.env.SCRAPE_INTERVAL_HOURS || '24'
 
@@ -33,7 +34,7 @@ async function runScrapingJob() {
     for (const robot of robots) {
       console.log(`🤖 Processing: ${robot.name}`)
       
-      const activeSources = robot.dataSources.filter(ds => {
+      const activeSources = robot.dataSources.filter((ds: DataSource) => {
         // Only scrape if:
         // 1. Source is active
         // 2. Last scraped more than configured hours ago OR never scraped
@@ -83,7 +84,7 @@ async function runScrapingJob() {
           
           // Update robot's data source
           const sourceIndex = robot.dataSources.findIndex(
-            ds => ds._id?.toString() === source._id?.toString()
+            (ds: DataSource) => ds._id?.toString() === source._id?.toString()
           )
           
           if (sourceIndex !== -1) {

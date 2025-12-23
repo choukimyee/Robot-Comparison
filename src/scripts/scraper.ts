@@ -7,6 +7,7 @@ import connectDB from '../lib/mongodb'
 import Robot from '../models/Robot'
 import Manufacturer from '../models/Manufacturer'
 import { scrapeUrl, scrapeManufacturerSite } from '../lib/scraper'
+import type { DataSource } from '../types'
 
 async function main() {
   try {
@@ -23,7 +24,7 @@ async function main() {
     for (const robot of robots) {
       console.log(`\n🤖 Processing: ${robot.name}`)
       
-      const activeSources = robot.dataSources.filter(ds => ds.isActive)
+      const activeSources = robot.dataSources.filter((ds: DataSource) => ds.isActive)
       
       for (const source of activeSources) {
         try {
@@ -44,7 +45,7 @@ async function main() {
           
           // Update the data source with scraped data
           const sourceIndex = robot.dataSources.findIndex(
-            ds => ds._id?.toString() === source._id?.toString()
+            (ds: DataSource) => ds._id?.toString() === source._id?.toString()
           )
           
           if (sourceIndex !== -1) {

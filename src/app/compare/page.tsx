@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Robot, ComparisonField } from '@/types'
 import { ArrowLeft, TrendingUp } from 'lucide-react'
 
-export default function ComparePage() {
+function ComparePageContent() {
   const searchParams = useSearchParams()
   const ids = searchParams.get('ids')?.split(',') || []
   
@@ -239,5 +239,17 @@ export default function ComparePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ComparePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-primary-600"></div>
+      </div>
+    }>
+      <ComparePageContent />
+    </Suspense>
   )
 }
