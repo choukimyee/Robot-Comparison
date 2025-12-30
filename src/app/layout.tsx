@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
+import SessionProvider from '@/components/SessionProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,20 +20,22 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className={inter.className}>
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <footer className="bg-gray-900 text-white py-8 mt-16">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-sm">
-              © 2025 机器人竞品对比平台. All rights reserved.
-            </p>
-            <p className="text-xs text-gray-400 mt-2">
-              数据来源于官方网站、新闻报道及社交媒体
-            </p>
-          </div>
-        </footer>
+        <SessionProvider>
+          <Header />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <footer className="bg-gray-900 text-white py-8 mt-16">
+            <div className="container mx-auto px-4 text-center">
+              <p className="text-sm">
+                © 2025 机器人竞品对比平台. All rights reserved.
+              </p>
+              <p className="text-xs text-gray-400 mt-2">
+                数据来源于官方网站、新闻报道及社交媒体
+              </p>
+            </div>
+          </footer>
+        </SessionProvider>
       </body>
     </html>
   )

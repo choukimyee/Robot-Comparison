@@ -17,6 +17,7 @@
 - 🌊 **瀑布流展示** - 响应式瀑布流布局，优雅展示产品卡片
 - 🕷️ **自动抓取** - 每日自动检索官网、新闻、社交媒体等数据源
 - 📝 **手动管理** - 完整的后台管理系统，支持手动添加和编辑
+- 🔒 **身份验证** - NextAuth.js 身份验证保护管理后台，会话管理和过期处理
 - 🎯 **重点厂家** - 特别关注 Tesla、Figure AI、Unitree（宇树科技）、Sunday Robotics 等
 
 ## 🏗️ 技术栈
@@ -33,6 +34,7 @@
 - **运行时**: Node.js
 - **API**: Next.js API Routes
 - **数据库**: MongoDB + Mongoose
+- **身份验证**: NextAuth.js + JWT
 - **数据抓取**: Puppeteer, Cheerio, Axios
 
 ### 开发工具
@@ -196,7 +198,13 @@ npm run scrape:scheduled
 
 ### 数据管理后台
 
-访问 `/admin` 进入管理后台：
+访问 `/admin` 进入管理后台（需要登录）：
+
+**默认管理员账号**：
+- 邮箱：`admin@robot-comparison.com`
+- 密码：`admin123`
+
+**⚠️ 重要**：生产环境请立即修改默认密码！查看 [身份验证文档](./docs/authentication.md) 了解详情。
 
 1. **机器人管理** (`/admin/robots`)
    - 添加、编辑、删除机器人产品
@@ -369,6 +377,15 @@ docker-compose up -d
 - `POST /api/scrape` - 触发抓取任务
 - `GET /api/scrape` - 获取抓取历史
 
+### 身份验证 API
+
+- `POST /api/auth/signin` - 用户登录
+- `POST /api/auth/signout` - 用户登出
+- `GET /api/auth/session` - 获取会话信息
+- `GET /api/auth/csrf` - 获取 CSRF Token
+
+查看完整身份验证文档：[authentication.md](./docs/authentication.md)
+
 ## 🔧 故障排除
 
 ### MongoDB 连接失败
@@ -404,6 +421,24 @@ images: {
   ],
 }
 ```
+
+### 登录问题 / 会话过期
+
+**症状**：无法登录或登录后立即跳转到错误页
+
+**解决方案**：
+1. 检查环境变量是否配置正确（NEXTAUTH_URL 和 NEXTAUTH_SECRET）
+2. 确认 `.env` 文件存在且包含正确配置
+3. 清除浏览器 Cookies 和缓存
+4. 重启开发服务器：`npm run dev`
+5. 查看浏览器控制台和服务器终端的错误信息
+
+**生成新密码**：
+```bash
+npm run generate-password your-new-password
+```
+
+查看完整身份验证文档：[authentication.md](./docs/authentication.md)
 
 ## 🤝 贡献指南
 

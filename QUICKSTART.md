@@ -61,8 +61,13 @@ npm run seed
 ### 3. 管理数据（后台）
 
 1. 访问 http://localhost:3000/admin
-2. 选择"机器人管理"或"厂家管理"
-3. 添加或编辑产品信息
+2. 使用默认管理员账号登录：
+   - **邮箱**: `admin@robot-comparison.com`
+   - **密码**: `admin123`
+3. 选择"机器人管理"或"厂家管理"
+4. 添加或编辑产品信息
+
+⚠️ **重要**: 生产环境请立即修改默认密码！
 
 ### 4. 添加数据源
 
@@ -100,6 +105,9 @@ npm run seed         # 填充示例数据
 npm run scrape       # 手动运行一次数据抓取
 npm run scrape:scheduled  # 启动定时抓取服务
 
+# 身份验证
+npm run generate-password <your-password>  # 生成密码哈希
+
 # 代码质量
 npm run lint         # 检查代码规范
 ```
@@ -131,6 +139,7 @@ robot-comparison-platform/
 ## 下一步
 
 - 📖 阅读完整 [README.md](./README.md) 了解详细功能
+- 🔒 查看 [身份验证文档](./docs/authentication.md) 配置登录系统
 - 🚀 查看 [DEPLOYMENT.md](./DEPLOYMENT.md) 学习部署
 - 🔧 修改 `src/types/index.ts` 自定义参数字段
 - 🕷️ 编辑 `src/lib/scraper.ts` 添加更多数据源
@@ -143,6 +152,18 @@ robot-comparison-platform/
 docker ps | grep mongo
 # 或
 mongosh
+```
+
+### 登录问题
+```bash
+# 如果无法登录，检查环境变量
+cat .env | grep NEXTAUTH
+
+# 确保包含以下配置：
+# NEXTAUTH_URL=http://localhost:3000
+# NEXTAUTH_SECRET=<自动生成的密钥>
+
+# 清除浏览器 Cookies 后重试
 ```
 
 ### 端口被占用
