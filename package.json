@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "A comprehensive robot comparison platform for quadruped robots, humanoid robots, and more",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3010",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3010",
     "lint": "next lint",
     "scrape": "tsx src/scripts/scraper.ts",
     "scrape:scheduled": "node --loader tsx src/scripts/scheduled-scraper.ts",

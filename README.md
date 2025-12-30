@@ -59,7 +59,7 @@ npm install
 npm run dev
 ```
 
-访问 http://localhost:3000 即可体验！
+访问 http://localhost:3010 即可体验！
 
 查看详情：[DEMO_MODE.md](./DEMO_MODE.md)
 
@@ -107,7 +107,7 @@ CRON_SCHEDULE=0 2 * * *
 RUN_ON_START=false
 
 # 应用配置
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3010
 ```
 
 ### 4. 配置数据库
@@ -150,7 +150,7 @@ MONGODB_URI=mongodb://localhost:27017/robot-comparison
 npm run dev
 ```
 
-访问 http://localhost:3000 查看应用。
+访问 http://localhost:3010 查看应用。
 
 ### 6. 填充示例数据
 
@@ -328,7 +328,7 @@ services:
   app:
     build: .
     ports:
-      - "3000:3000"
+      - "3010:3010"
     environment:
       - MONGODB_URI=mongodb://mongo:27017/robot-comparison
     depends_on:

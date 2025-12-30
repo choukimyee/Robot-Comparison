@@ -119,7 +119,7 @@ src/scripts/
 需要在 `.env` 文件中配置：
 
 ```env
-NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_URL=http://localhost:3010
 NEXTAUTH_SECRET=your-super-secret-key-here
 ```
 
@@ -134,7 +134,7 @@ npm run dev
 
 ### 2. 访问管理后台
 
-- 访问 http://localhost:3000/admin
+- 访问 http://localhost:3010/admin
 - 将自动跳转到登录页
 - 使用默认账号登录
 

@@ -30,7 +30,7 @@
 
 ```env
 # NextAuth 配置
-NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_URL=http://localhost:3010
 NEXTAUTH_SECRET=your-super-secret-key-here
 ```
 
