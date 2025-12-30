@@ -51,7 +51,7 @@ MONGODB_URI=mongodb+srv://your-username:your-password@cluster0.xxxxx.mongodb.net
 npm run dev
 ```
 
-然后访问 http://localhost:3000/admin 检查是否能连接数据库。
+然后访问 http://localhost:3010/admin 检查是否能连接数据库。
 
 ## 安全提示
 

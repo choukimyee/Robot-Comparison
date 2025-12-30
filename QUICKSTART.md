@@ -16,7 +16,7 @@ docker-compose up -d
 docker-compose logs -f app
 
 # 4. 访问应用
-# 打开浏览器访问 http://localhost:3000
+# 打开浏览器访问 http://localhost:3010
 ```
 
 ### 方法二：本地开发（推荐学习）
@@ -41,14 +41,14 @@ npm run dev
 npm run seed
 
 # 5. 访问应用
-# 打开浏览器访问 http://localhost:3000
+# 打开浏览器访问 http://localhost:3010
 ```
 
 ## 首次使用指南
 
 ### 1. 浏览产品
 
-1. 访问首页 http://localhost:3000
+1. 访问首页 http://localhost:3010
 2. 选择一个机器人品类（如"四足机器狗"或"人形机器人"）
 3. 查看产品列表和详细信息
 
@@ -60,13 +60,18 @@ npm run seed
 
 ### 3. 管理数据（后台）
 
-1. 访问 http://localhost:3000/admin
-2. 选择"机器人管理"或"厂家管理"
-3. 添加或编辑产品信息
+1. 访问 http://localhost:3010/admin
+2. 使用默认管理员账号登录：
+   - **邮箱**: `admin@robot-comparison.com`
+   - **密码**: `admin123`
+3. 选择"机器人管理"或"厂家管理"
+4. 添加或编辑产品信息
+
+⚠️ **重要**: 生产环境请立即修改默认密码！
 
 ### 4. 添加数据源
 
-1. 访问 http://localhost:3000/admin/scraping
+1. 访问 http://localhost:3010/admin/scraping
 2. 点击"添加数据源"
 3. 选择产品，输入URL（如官网、新闻链接）
 4. 系统会自动抓取数据
@@ -100,6 +105,9 @@ npm run seed         # 填充示例数据
 npm run scrape       # 手动运行一次数据抓取
 npm run scrape:scheduled  # 启动定时抓取服务
 
+# 身份验证
+npm run generate-password <your-password>  # 生成密码哈希
+
 # 代码质量
 npm run lint         # 检查代码规范
 ```
@@ -131,6 +139,7 @@ robot-comparison-platform/
 ## 下一步
 
 - 📖 阅读完整 [README.md](./README.md) 了解详细功能
+- 🔒 查看 [身份验证文档](./docs/authentication.md) 配置登录系统
 - 🚀 查看 [DEPLOYMENT.md](./DEPLOYMENT.md) 学习部署
 - 🔧 修改 `src/types/index.ts` 自定义参数字段
 - 🕷️ 编辑 `src/lib/scraper.ts` 添加更多数据源
@@ -145,10 +154,22 @@ docker ps | grep mongo
 mongosh
 ```
 
+### 登录问题
+```bash
+# 如果无法登录，检查环境变量
+cat .env | grep NEXTAUTH
+
+# 确保包含以下配置：
+# NEXTAUTH_URL=http://localhost:3010
+# NEXTAUTH_SECRET=<自动生成的密钥>
+
+# 清除浏览器 Cookies 后重试
+```
+
 ### 端口被占用
 ```bash
-# 修改端口（默认3000）
-PORT=3001 npm run dev
+# 修改端口（默认3010）
+PORT=3011 npm run dev
 ```
 
 ### 查看日志

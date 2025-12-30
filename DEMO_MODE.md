@@ -126,7 +126,7 @@ DEMO_MODE=true npm run dev
 npm run dev
 ```
 
-然后访问 http://localhost:3000
+然后访问 http://localhost:3010
 
 ## 💡 使用建议
 

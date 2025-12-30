@@ -6,12 +6,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3010:3010"
     environment:
       - MONGODB_URI=mongodb://mongo:27017/robot-comparison
       - SCRAPE_INTERVAL_HOURS=24
       - ENABLE_AUTO_SCRAPING=true
-      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+      - NEXT_PUBLIC_APP_URL=http://localhost:3010
     depends_on:
       - mongo
     restart: unless-stopped

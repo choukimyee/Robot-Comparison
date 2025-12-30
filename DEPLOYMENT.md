@@ -35,7 +35,7 @@ npm run seed
 npm run dev
 ```
 
-访问 http://localhost:3000
+访问 http://localhost:3010
 
 ### 生产环境部署
 
@@ -157,7 +157,7 @@ server {
     server_name your-domain.com;
 
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:3010;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -196,7 +196,7 @@ sudo certbot --nginx -d your-domain.com
 | `ENABLE_AUTO_SCRAPING` | 启用自动抓取 | `true` |
 | `CRON_SCHEDULE` | Cron 表达式 | `0 2 * * *` |
 | `RUN_ON_START` | 启动时立即抓取 | `false` |
-| `NEXT_PUBLIC_APP_URL` | 应用 URL | `http://localhost:3000` |
+| `NEXT_PUBLIC_APP_URL` | 应用 URL | `http://localhost:3010` |
 | `TWITTER_API_KEY` | Twitter API 密钥 | - |
 | `TWITTER_API_SECRET` | Twitter API 密钥 | - |
 
