@@ -36,7 +36,7 @@
     .cat-select{border:none;background:transparent;font-size:14px;font-weight:600;color:#fff;cursor:pointer;width:100%;text-align:center;padding:8px;height:100%}.cat-select option{color:#1f2937}
     .collapse-icon{transition:transform .2s;font-size:10px}.collapse-icon.collapsed{transform:rotate(-90deg)}
     .img-cell{padding:0;background:linear-gradient(135deg,#f3f4f6,#e5e7eb);position:relative;overflow:hidden;aspect-ratio:1/1;border-bottom:1px solid #e5e7eb}
-    .img-cell img { max-height:90px; max-width:120px; object-fit:contain; }{width:100%;height:100%;object-fit:cover;object-position:top center}
+    .img-cell img { max-height:90px; max-width:120px; object-fit:contain; }
     .cell.bg-gray-800{display:flex;align-items:stretch;justify-content:center;padding:0;border-bottom:1px solid #374151}
     .scroll-area{background:#f3f4f6;overflow-y:auto;flex:1}
     .footer{background:#f3f4f6;padding:24px;text-align:center;color:#9ca3af;font-size:12px;font-weight:300}
@@ -123,8 +123,8 @@ const changeColNum=(delta)=>{numCols=Math.max(2,Math.min(10,numCols+delta));init
 const startDragGroup=(gid,e)=>{if(!isLoggedIn)return;dragGroup=gid;e.stopPropagation()};
 const startDragSpec=(gid,spec,idx,e)=>{if(!isLoggedIn)return;dragSpec={gid,spec,idx};e.stopPropagation()};
 const allowDrop=(e)=>{if(!isLoggedIn)return;e.preventDefault()};
-const dropGroup=(targetGid)=>{if(!isLoggedIn)return;event.preventDefault();if(!dragGroup||dragGroup===targetGid)return;const fromIdx=SG.findIndex(x=>x.id===dragGroup),toIdx=SG.findIndex(x=>x.id===targetGid);if(fromIdx<0||toIdx<0)return;const[item]=SG.splice(fromIdx,1);SG.splice(toIdx,0,item);saveSG();dragGroup=null;render()};
-const dropSpec=(gid,idx)=>{if(!isLoggedIn)return;event.preventDefault();if(!dragSpec)return;const fromG=SG.find(x=>x.id===dragSpec.gid),toG=SG.find(x=>x.id===gid);if(!fromG||!toG)return;const spec=fromG.specs.splice(dragSpec.idx,1)[0];const better=fromG.better?fromG.better.splice(dragSpec.idx,1)[0]:'';toG.specs.splice(idx,0,spec);if(!toG.better)toG.better=[];toG.better.splice(idx,0,better);saveSG();dragSpec=null;render()};
+const dropGroup=async(targetGid)=>{if(!isLoggedIn)return;event.preventDefault();if(!dragGroup||dragGroup===targetGid)return;const fromIdx=SG.findIndex(x=>x.id===dragGroup),toIdx=SG.findIndex(x=>x.id===targetGid);if(fromIdx<0||toIdx<0)return;const[item]=SG.splice(fromIdx,1);SG.splice(toIdx,0,item);await saveSG();dragGroup=null;render()};
+const dropSpec=async(gid,idx)=>{if(!isLoggedIn)return;event.preventDefault();if(!dragSpec)return;const fromG=SG.find(x=>x.id===dragSpec.gid),toG=SG.find(x=>x.id===gid);if(!fromG||!toG)return;const spec=fromG.specs.splice(dragSpec.idx,1)[0];const better=fromG.better?fromG.better.splice(dragSpec.idx,1)[0]:'';toG.specs.splice(idx,0,spec);if(!toG.better)toG.better=[];toG.better.splice(idx,0,better);await saveSG();dragSpec=null;render()};
 window.editGroup=editGroup;window.saveGroup=saveGroup;window.deleteGroup=deleteGroup;window.editSpec=editSpec;window.saveSpec=saveSpec;window.deleteSpec=deleteSpec;window.showAddModal=showAddModal;window.toggleAddType=toggleAddType;window.saveNewItem=saveNewItem;window.changeColNum=changeColNum;window.startDragGroup=startDragGroup;window.startDragSpec=startDragSpec;window.allowDrop=allowDrop;window.dropGroup=dropGroup;window.dropSpec=dropSpec;window.showLoginModal=showLoginModal;window.doLogin=doLogin;window.doLogout=doLogout;
 const render=()=>{document.documentElement.style.setProperty('--cols',numCols);const cat=C.find(c=>c.id===cur),B=gB(),sel=sM.map(id=>R.find(r=>r.id===id)||null);
 document.getElementById('app').innerHTML=`
