@@ -39,27 +39,12 @@ const categories = [
   { id: 'others', name: 'Others', icon: '📦' }
 ];
 
-// Routes without /api prefix for Vercel serverless function
-// Vercel's api/ directory already handles /api routing
-
-// Test route to verify serverless function is working
-app.get('/', (req, res) => {
-  res.json({ message: 'API server is running', routes: ['/categories', '/admin-config', '/robots/:category', '/config/:category'] });
-});
-
-app.get('/categories', (req, res) => {
+app.get('/api/categories', (req, res) => {
   console.log('📋 返回分类列表');
   res.json(categories);
 });
 
-app.get('/admin-config', (_req, res) => {
-  res.json({
-    user: process.env.ADMIN_USER || '',
-    pass: process.env.ADMIN_PASS || ''
-  });
-});
-
-app.get('/robots/:category', async (req, res) => {
+app.get('/api/robots/:category', async (req, res) => {
   try {
     const { category } = req.params;
     console.log(`🤖 获取机器人数据: ${category}`);
@@ -123,7 +108,7 @@ app.get('/robots/:category', async (req, res) => {
   }
 });
 
-app.get('/config/:category', async (req, res) => {
+app.get('/api/config/:category', async (req, res) => {
   try {
     const { category } = req.params;
     const response = await notion.databases.query({
@@ -141,7 +126,7 @@ app.get('/config/:category', async (req, res) => {
   }
 });
 
-app.post('/config/:category', async (req, res) => {
+app.post('/api/config/:category', async (req, res) => {
   try {
     const { category } = req.params;
     const { specGroups } = req.body;
