@@ -1,7 +1,9 @@
-const express = require('express');
-const { Client } = require('@notionhq/client');
-const cors = require('cors');
-require('dotenv').config();
+import express from 'express';
+import { Client } from '@notionhq/client';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
@@ -9,7 +11,7 @@ const notion = new Client({ auth: process.env.NOTION_TOKEN });
 app.use(cors());
 app.use(express.json());
 
-const DB_CONFIG = process.env.DB_CONFIG || '2e361bed8f1c80b7b408f9210a57ef58';
+const DB_CONFIG = process.env.DB_CONFIG || '515b8bdd9b0c80c6abc4e5f56a037a6b';
 
 const databases = {
   humanoid: process.env.DB_HUMANOID || '5287fbe07a1f459f9641ef25da1d604b',
@@ -119,6 +121,7 @@ app.get('/api/config/:category', async (req, res) => {
     }
     res.json({ specGroups: [] });
   } catch (error) {
+    console.error('❌ 读取配置失败:', error);
     res.json({ specGroups: [] });
   }
 });
@@ -137,6 +140,7 @@ app.post('/api/config/:category', async (req, res) => {
         page_id: queryResponse.results[0].id,
         properties: { Config: { rich_text: [{ text: { content: configText } }] } }
       });
+      console.log(`✅ 配置已更新: ${category}`);
     } else {
       await notion.pages.create({
         parent: { database_id: DB_CONFIG },
@@ -145,9 +149,11 @@ app.post('/api/config/:category', async (req, res) => {
           Config: { rich_text: [{ text: { content: configText } }] }
         }
       });
+      console.log(`✅ 配置已创建: ${category}`);
     }
     res.json({ success: true });
   } catch (error) {
+    console.error('❌ 保存配置失败:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -157,4 +163,4 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
 
-module.exports = app;
+export default app;
